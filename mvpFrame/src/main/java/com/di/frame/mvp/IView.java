@@ -1,6 +1,6 @@
 package com.di.frame.mvp;
 
-import android.content.Intent;
+import android.os.Bundle;
 
 public interface IView {
 
@@ -8,9 +8,11 @@ public interface IView {
 
     void hideLoading();
 
-    void showMessage();
+    void showMessage(Throwable e);
 
-    void transAct(Intent intent);
+    void trans(Class<?> cls, Bundle bundle);
+
+    void transForResult(Class<?> cls, Bundle bundle, int requestCode);
 
     void finishSelf();
 }

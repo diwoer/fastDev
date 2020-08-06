@@ -1,7 +1,9 @@
 package com.di.frame.mvp;
 
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.di.module.eventbus.EventBus;
 
@@ -44,7 +46,7 @@ public abstract class BasePresenter<M extends IModel, V extends IView> implement
         if(mView != null && mView instanceof LifecycleOwner){
             ((LifecycleOwner) mView).getLifecycle().addObserver(this);
             if(mModel != null && mModel instanceof LifecycleOwner){
-                ((LifecycleOwner) mModel).getLifecycle().addObserver(this);
+                ((LifecycleOwner) mView).getLifecycle().addObserver((LifecycleObserver) mModel);
             }
         }
 
@@ -63,5 +65,10 @@ public abstract class BasePresenter<M extends IModel, V extends IView> implement
         }
         mModel = null;
         mView = null;
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    void onDestroy(LifecycleOwner owner){
+        owner.getLifecycle().removeObserver(this);
     }
 }
