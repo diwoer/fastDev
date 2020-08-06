@@ -1,0 +1,4 @@
+include ':app'
+include ':mvpFrame',
+        ':libEventbus'
+rootProject.name = "FastDev"
