@@ -1,7 +1,7 @@
 package com.di.fast.presenter;
 
 import com.di.fast.contract.LoginContract;
-import com.di.frame.mvp.BasePresenter;
+import com.di.base.frame.mvp.BasePresenter;
 
 public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginContract.View> {
 

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.di.fast.R;
 import com.di.fast.contract.LoginContract;
 import com.di.fast.presenter.LoginPresenter;
-import com.di.frame.mvp.base.ActivityPresenterView;
+import com.di.base.frame.mvp.base.ActivityPresenterView;
 
 public class MainActivity extends ActivityPresenterView<LoginPresenter> implements LoginContract.View {
 

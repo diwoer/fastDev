@@ -1,5 +1,4 @@
 include ':libBase'
 include ':app'
-include ':mvpFrame',
-        ':libEventbus'
+include':libEventbus'
 rootProject.name = "FastDev"
