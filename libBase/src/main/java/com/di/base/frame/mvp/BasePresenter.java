@@ -1,5 +1,7 @@
 package com.di.base.frame.mvp;
 
+import android.util.Log;
+
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
@@ -12,15 +14,11 @@ public abstract class BasePresenter<M extends IModel, V extends IView> implement
     protected M mModel;
     protected V mView;
 
-    /**
-     * 设置要绑定的model
-     * */
-    protected abstract Class<M> getModelClass();
-
-    /**
-     * 设置要绑定的view
-     * */
-    protected abstract Class<V> getViewClass();
+    public BasePresenter(M m, V v){
+        this.mModel = m;
+        this.mView = v;
+        onStart();
+    }
 
     /**
      * 使用EventBus
@@ -33,15 +31,6 @@ public abstract class BasePresenter<M extends IModel, V extends IView> implement
 
     @Override
     public void onStart() {
-
-        try {
-            mModel = getModelClass().newInstance();
-            mView = getViewClass().newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
 
         if(mView != null && mView instanceof LifecycleOwner){
             ((LifecycleOwner) mView).getLifecycle().addObserver(this);

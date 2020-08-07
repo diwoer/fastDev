@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.di.fast.state.StateView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/state_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:text="登录"/>
+
+        <com.di.base.widget.et.IconEditText
+            android:id="@+id/et_login_name"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:hint="请输入登录名"
+            android:textColorHint="@android:color/darker_gray"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="@color/colorTxtDarkGray"
+            android:maxLines="1"
+            android:maxLength="50"
+            android:inputType="text"/>
+
+        <com.di.base.widget.et.IconEditText
+            android:id="@+id/et_login_password"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:hint="请输入密码"
+            android:textColorHint="@android:color/darker_gray"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:textColor="@color/colorTxtDarkGray"
+            android:maxLines="1"
+            android:maxLength="20"
+            android:inputType="text"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="登录"
+            android:background="@drawable/btn_bg"
+            style="?android:borderlessButtonStyle"/>
+    </LinearLayout>
+
+</com.di.fast.state.StateView>

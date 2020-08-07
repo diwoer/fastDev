@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="delIcon" format="reference" />
+
+    <declare-styleable name="IconEditText">
+        <attr name="delIcon" />
+    </declare-styleable>
+
+    <declare-styleable name="DeleteEditText">
+        <attr name="delIcon" />
+    </declare-styleable>
+
+</resources>

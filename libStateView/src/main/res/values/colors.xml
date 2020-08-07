@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorThemeTeacher">#26C8AB</color>
+    <color name="colorThemeStudent">#FFDB28</color>
+
+    <color name="colorBgToast">#AA000000</color>
+
+    <color name="colorTxtGray">#999999</color>
+    <color name="colorTxt505050">#505050</color>
+    <color name="colorTxtMidGray">#666666</color>
+    <color name="colorTxtDarkGray">#333333</color>
+    <color name="colorLineGray">#EEEEEE</color>
+
+</resources>

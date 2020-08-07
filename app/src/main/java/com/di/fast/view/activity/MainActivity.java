@@ -15,11 +15,6 @@ public class MainActivity extends ActivityPresenterView<LoginPresenter> implemen
     }
 
     @Override
-    protected Class<LoginPresenter> getPresenterClass() {
-        return LoginPresenter.class;
-    }
-
-    @Override
     public void outCreate(Bundle savedInstanceState) {
 
     }

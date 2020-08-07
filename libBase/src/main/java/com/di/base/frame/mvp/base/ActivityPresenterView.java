@@ -17,7 +17,6 @@ import com.di.base.frame.mvp.IView;
 public abstract class ActivityPresenterView<P extends IPresenter> extends AppCompatActivity
         implements IView, UIListener, LifecycleOwner, IViewControllerCommon, IViewControllerClick, View.OnClickListener {
 
-    @Nullable
     protected P mPresenter;
 
     /**
@@ -35,22 +34,18 @@ public abstract class ActivityPresenterView<P extends IPresenter> extends AppCom
     /**
      * 绑定presenter
      * */
-    protected abstract Class<P> getPresenterClass();
+    protected abstract P getPresenter();
 
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            mPresenter = getPresenterClass().newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
 
         mContentView = getLayoutInflater().inflate(getRootView(), null);
 
         setContentView(mContentView);
+
+        mPresenter = getPresenter();
+        mPresenter.onStart();
 
         mViewControllerFactory = new ViewControllerFactory(mContentView, this);
 
@@ -65,6 +60,11 @@ public abstract class ActivityPresenterView<P extends IPresenter> extends AppCom
             mPresenter.onDestroy();
             mPresenter = null;
         }
+    }
+
+    @Override
+    public void outDestroy() {
+
     }
 
     @Override

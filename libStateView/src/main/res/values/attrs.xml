@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="radius" format="dimension"/>
+    <attr name="HByW" format="float" />
+
+    <!-- SwipeCaptchaView -->
+    <declare-styleable name="SwipeCaptchaView">
+        <attr name="captchaWidth" format="dimension"/>
+        <attr name="captchaHeight" format="dimension"/>
+        <attr name="matchDeviation" format="dimension"/>
+    </declare-styleable>
+
+    <!-- UICRoundImageView -->
+    <declare-styleable name="UICRoundImageView">
+        <attr name="border_color" format="color" />
+        <attr name="border_width" format="dimension" />
+        <attr name="radius"/>
+    </declare-styleable>
+
+    <!-- BannerLayout -->
+    <declare-styleable name="BannerLayout">
+        <attr name="HByW"/>
+        <attr name="indicator_diam" format="dimension" />
+        <attr name="indicator_margin" format="dimension" />
+        <attr name="indicator_check_res" format="reference" />
+        <attr name="indicator_uncheck_res" format="reference" />
+        <attr name="first_page_index" format="integer" />
+        <attr name="left_right_margin" format="dimension" />
+        <attr name="page_delay_time" format="integer" />
+        <attr name="demo_page_image" format="reference" />
+        <attr name="view_radius" format="dimension"/>
+    </declare-styleable>
+
+    <!-- 跑马灯效果的TextView -->
+    <declare-styleable name="MarqueeTextView">
+
+        <attr name="marqueeview_repet_type" format="enum">
+            <enum name="repet_oncetime" value="0"/><!-- 播放一次 -->
+            <enum name="repet_interval" value="1"/>  <!--连续播放 循环结束再继续下次循环-->
+            <enum name="repet_continuous" value="2"/>  <!--连续播放 到末尾直接继续下次循环-->
+        </attr><!--循环模式-->
+
+        <attr name="marqueeview_text_distance" format="integer"/><!--每个item之间的距离-->
+        <attr name="marqueeview_text_startlocationdistance" format="float"/><!--开始的起始位置 按距离控件左边的百分比 0~1之间 -->
+
+        <attr name="marqueeview_text_speed" format="float"/><!--播放速度 也就是文字滚动速度-->
+        <attr name="marqueeview_text_color" format="color|reference"/><!-- 文字颜色 -->
+        <attr name="marqueeview_text_size" format="float"/><!-- 文字大小 -->
+
+        <attr name="marqueeview_isclickalbe_stop" format="boolean"/><!--是否点击暂停-->
+        <attr name="marqueeview_is_resetLocation" format="boolean"/><!--重新改变内容的时候 ， 是否初始化 位置，默认为true，改变-->
+    </declare-styleable>
+
+    <!-- 圆弧进度条 -->
+    <declare-styleable name="ArcProgress">
+        <attr name="borderWidth" format="dimension"/>
+        <attr name="unprogresColor" format="color|reference"/>
+        <attr name="progressStartColor" format="color|reference"/>
+        <attr name="progressEndColor" format="color|reference"/>
+        <attr name="progressColor" format="color|reference"/>
+        <attr name="tickWidth" format="dimension"/>
+        <attr name="tickDensity" format="integer"/>
+        <attr name="bgShow" format="boolean"/>
+        <attr name="radius"/>
+        <attr name="arcbgColor" format="color|reference"/>
+        <attr name="degree" format="integer"/>
+        <attr name="arcCapRound" format="boolean"/>
+        <attr name="progressStyle" format="enum">
+            <enum name="tick" value="1"/>
+            <enum name="arc" value="0"/>
+        </attr>
+    </declare-styleable>
+
+    <!-- TitleHRecyclerView -->
+    <declare-styleable name="TitleHRecyclerView">
+        <attr name="title" format="string" />
+        <attr name="moreTxt" format="string" />
+    </declare-styleable>
+
+    <!--  -->
+    <declare-styleable name="ScrollLayout">
+        <attr name="minOffset" format="dimension" />
+        <attr name="maxOffset" format="dimension" />
+        <attr name="exitOffset" format="dimension" />
+        <attr name="mode">
+            <flag name="open" value="0x0" />
+            <flag name="close" value="0x1" />
+            <flag name="exit" value="0x2" />
+        </attr>
+        <attr name="allowHorizontalScroll" format="boolean"/>
+        <attr name="isSupportExit" format="boolean"/>
+    </declare-styleable>
+
+</resources>
