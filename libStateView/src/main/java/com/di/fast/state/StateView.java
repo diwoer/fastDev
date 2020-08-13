@@ -63,11 +63,12 @@ public class StateView extends FrameLayout {
 
     public static class STATE{
 
-        static final String STATE_LOADING = "STATE_LOADING";
-        static final String STATE_EMPTY = "STATE_EMPTY";
-        static final String STATE_NET_ERROR = "STATE_NET_ERROR";
+        public static final String STATE_LOADING = "STATE_LOADING";
+        public static final String STATE_EMPTY = "STATE_EMPTY";
+        public static final String STATE_NET_ERROR = "STATE_NET_ERROR";
+        public static final String STATE_COMMON_ERROR = "STATE_COMMON_ERROR";
 
-        static final String STATE_CONTENT = "STATE_CONTENT";
+        public static final String STATE_CONTENT = "STATE_CONTENT";
     }
 
     public void enableTransparentLoadingView(boolean isTransparent){
@@ -105,23 +106,28 @@ public class StateView extends FrameLayout {
         mDefaultStateView.showNetErrorLayout(onRetryListener);
     }
 
+    public void showCommonErrorLayout(){
+        showLayoutByState(STATE.STATE_COMMON_ERROR);
+        mDefaultStateView.showCommonErrorLayout(onRetryListener);
+    }
+
     public void showDataLayout(){
         showLayoutByState(STATE.STATE_CONTENT);
     }
 
     public void showLayoutByException(Throwable e){
-        if(e instanceof SocketException){
+        if(e instanceof SocketException){//网络请求错误界面
             showNetErrorLayout();
-        }else if(e instanceof SocketTimeoutException){
+        }else if(e instanceof SocketTimeoutException){//网络请求超时界面
             showNetErrorLayout();
-        }else if(e instanceof EmptyException){
+        }else if(e instanceof EmptyException){//空数据界面
             if(TextUtils.isEmpty(e.getMessage())){
                 showEmptyLayout();
             }else {
                 showEmptyLayout(e.getMessage());
             }
-        }else {
-            //TODO 差一个通用错误界面
+        }else {//通用错误界面
+            showCommonErrorLayout();
         }
     }
 
@@ -134,6 +140,7 @@ public class StateView extends FrameLayout {
                 break;
             case STATE.STATE_EMPTY:
             case STATE.STATE_NET_ERROR:
+            case STATE.STATE_COMMON_ERROR:
                 mContentView.setVisibility(GONE);
                 mDefaultStateView.setVisibility(VISIBLE);
                 mLoadingStateView.setVisibility(GONE);

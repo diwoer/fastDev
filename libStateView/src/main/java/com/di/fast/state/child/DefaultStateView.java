@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.di.fast.state.R;
+import com.di.fast.state.StateView;
 import com.di.fast.state.listener.OnRetryListener;
 import com.di.fast.state.manger.StateViewManger;
 
@@ -67,7 +68,21 @@ public class DefaultStateView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if(listener != null){
-                    listener.retry();
+                    listener.retry(StateView.STATE.STATE_NET_ERROR);
+                }
+            }
+        });
+    }
+
+    public void showCommonErrorLayout(final OnRetryListener listener){
+        ivIcon.setImageResource(R.drawable.ic_no_net);
+        tvTips.setText("(＞﹏＜)啊哦~发生了未知错误");
+        btnRetry.setVisibility(VISIBLE);
+        btnRetry.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null){
+                    listener.retry(StateView.STATE.STATE_COMMON_ERROR);
                 }
             }
         });

@@ -13,6 +13,7 @@ import com.di.fast.contract.LoginContract;
 import com.di.fast.model.LoginModel;
 import com.di.fast.presenter.LoginPresenter;
 import com.di.fast.state.StateView;
+import com.di.fast.state.listener.OnRetryListener;
 
 public class LoginActivity extends ActivityPresenterView<LoginPresenter> implements LoginContract.View {
 
@@ -55,6 +56,13 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
         etLoginPassword = get(R.id.et_login_password);
         btnLogin = get(R.id.btn_login);
 
+        stateView.setRetryListener(new OnRetryListener() {
+            @Override
+            public void retry(String state) {
+                hideLoading();
+            }
+        });
+
         bindSingleClicks(new int[]{
             R.id.btn_login
         });
@@ -62,16 +70,19 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
 
     @Override
     protected LoginPresenter getPresenter() {
-        return new LoginPresenter(new LoginModel(), this);
+        return new LoginPresenter(new LoginModel(), this, this);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login) {
-            etLoginPassword.clearFocus();
-            etLoginName.clearFocus();
             btnLogin.setEnabled(false);
-            mPresenter.login(etLoginName.getText(), etLoginPassword.getText());
+            mPresenter.login(etLoginName, etLoginPassword);
         }
+    }
+
+    @Override
+    public void loginSuccess() {
+
     }
 }

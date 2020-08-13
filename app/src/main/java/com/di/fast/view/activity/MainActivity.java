@@ -20,6 +20,11 @@ public class MainActivity extends ActivityPresenterView<LoginPresenter> implemen
     }
 
     @Override
+    protected LoginPresenter getPresenter() {
+        return null;
+    }
+
+    @Override
     public void outDestroy() {
 
     }
@@ -36,6 +41,11 @@ public class MainActivity extends ActivityPresenterView<LoginPresenter> implemen
 
     @Override
     public void showMessage(Throwable e) {
+
+    }
+
+    @Override
+    public void loginSuccess() {
 
     }
 }
