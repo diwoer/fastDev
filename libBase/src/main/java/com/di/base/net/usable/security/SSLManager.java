@@ -168,22 +168,7 @@ public class SSLManager {
 
     public SSLContext getNoVerifySSLContext(){
         TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    @Override
-                    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
-                    }
-
-                    @Override
-                    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
-                    }
-
-                    @Override
-                    public X509Certificate[] getAcceptedIssuers() {
-                        return new X509Certificate[]{};
-                    }
-                }
+                new NoVerifyTrustManager()
         };
         SSLContext sslContext = null;
         try {
@@ -214,9 +199,27 @@ public class SSLManager {
      * */
     public OkHttpClient.Builder OkHttpSupportAllCerts(OkHttpClient.Builder okHttpClientBuilder){
         SSLSocketFactory sslSocketFactory = getNoVerifySSLContext().getSocketFactory();
-        X509TrustManager trustManager = trustManager(sslSocketFactory);
+        X509TrustManager trustManager = new NoVerifyTrustManager();
         return  okHttpClientBuilder
                 .hostnameVerifier(getHostnameVerifier())
                 .sslSocketFactory(sslSocketFactory, trustManager);
+    }
+
+    private static class NoVerifyTrustManager implements X509TrustManager{
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+        }
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[]{};
+        }
     }
 }
