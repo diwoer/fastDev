@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.di.base.frame.bean.ToastMessageException;
 import com.di.base.frame.mvp.base.ActivityPresenterView;
+import com.di.base.tool.ApplicationTool;
 import com.di.base.widget.et.IconEditText;
 import com.di.fast.R;
 import com.di.fast.contract.LoginContract;
