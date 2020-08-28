@@ -1,0 +1,19 @@
+通过修改android studio中的 templates 可以生成对应的代码
+
+templates 文件路径：
+\Android Studio\plugins\android\lib\templates
+
+步骤：
+1、从templates文件夹中，拷贝一份EmptyActivity，重命名；
+
+2、修改拷贝的文件中的文件：
+//重命名要生成的文件
+recipe.xml.ftl
+//配置一些属性，用户可以自定义输入
+template.xml
+//通过修改activity_main.xml.ftl，可以自定义layout
+//通过修改AndroidManifestmvp.xml.ftl，可以自定义androidManifest文件
+//通过修改MainActivity.java.ftl，可以自定义activity
+//通过修改MainContract.java.ftl，可以自定义contract
+//通过修改MainModel.java.ftl，可以自定义model
+//通过修改MainPresenter.java.ftl，可以自定义presenter

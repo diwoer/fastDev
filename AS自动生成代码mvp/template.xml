@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<template
+    format="5"
+    revision="5"
+    name="MVP Activity"
+    minApi="9"
+    minBuildApi="14"
+    description="Creates a new MVP activity">
+
+    <category value="Activity" />
+    <formfactor value="Mobile" />
+	
+	//这个是MVP模式类名的前缀 之后可以生成MainActivity MainModel MainView
+	<parameter
+        id="componentName"
+        name="Prefix Name"
+        type="string"
+        constraints="class|unique|nonempty"      
+        default="Main"
+        help="default all mvp files' prefix name" />
+
+	//Activity类 MainActivity
+    <parameter
+        id="activityClass"
+        name="Activity Name"
+        type="string"
+        constraints="class|unique|nonempty"
+        suggest="${componentName}Activity"
+        default="MainActivity"
+        help="The name of the activity class to create" />
+
+	//生成资源文件
+    <parameter
+        id="layoutName"
+        name="Layout Name"
+        type="string"
+        constraints="layout|unique|nonempty"
+        suggest="${activityToLayout(activityClass)}"
+        default="activity_main"       
+        help="The name of the layout to create for the activity" />
+
+    //是否作为程序的主入口，新建项目时为true，默认为false
+    <parameter
+        id="isLauncher"
+        name="Launcher Activity"
+        type="boolean"
+        default="false"
+        help="If true, this activity will have a CATEGORY_LAUNCHER intent filter, making it visible in the launcher" />
+
+    //包名
+    <parameter
+        id="packageName"
+        name="Package name"
+        type="string"
+        constraints="package"
+        default="com.mycompany.myapp" />
+
+    //图片
+    <!-- 128x128 thumbnails relative to template.xml -->
+    <thumbs>
+        <!-- default thumbnail is required -->
+        <thumb>template_blank_activity.png</thumb>
+    </thumbs>
+
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+
+</template>

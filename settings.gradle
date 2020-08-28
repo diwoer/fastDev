@@ -1,3 +1,4 @@
+include ':libDemo'
 include ':libStateView'
 include ':libBase'
 include ':app'
