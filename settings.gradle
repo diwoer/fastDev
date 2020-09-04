@@ -1,6 +1,8 @@
+include ':libPlatform'
 include ':libDemo'
 include ':libStateView'
 include ':libBase'
 include ':app'
 include':libEventbus'
+include':RxBus'
 rootProject.name = "FastDev"

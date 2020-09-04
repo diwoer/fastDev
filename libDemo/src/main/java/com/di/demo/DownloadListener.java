@@ -10,8 +10,6 @@ public interface DownloadListener {
 
     void onCancel();
 
-    void onDestroy();
-
     void onSuccess();
 
     void onFail();

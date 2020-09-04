@@ -39,4 +39,6 @@ dependencies {
 
     implementation project(':libBase')
     implementation project(':libStateView')
+    implementation project(':libDemo')
+    implementation project(':RxBus')
 }

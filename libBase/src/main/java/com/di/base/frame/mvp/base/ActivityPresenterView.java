@@ -70,14 +70,18 @@ public abstract class ActivityPresenterView<P extends IPresenter> extends AppCom
     @Override
     public void trans(Class<?> cls, Bundle bundle) {
         Intent intent = new Intent(this, cls);
-        intent.putExtras(bundle);
+        if(bundle != null){
+            intent.putExtras(bundle);
+        }
         startActivity(intent);
     }
 
     @Override
     public void transForResult(Class<?> cls, Bundle bundle, int requestCode) {
         Intent intent = new Intent(this, cls);
-        intent.putExtras(bundle);
+        if(bundle != null){
+            intent.putExtras(bundle);
+        }
         startActivityForResult(intent, requestCode);
     }
 

@@ -1,19 +1,25 @@
 package com.di.fast.view.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.di.base.frame.bean.ToastMessageException;
 import com.di.base.frame.mvp.base.ActivityPresenterView;
+import com.di.base.log.DLog;
 import com.di.base.widget.et.IconEditText;
+import com.di.demo.view.activity.FileDownloadActivity;
 import com.di.fast.R;
 import com.di.fast.contract.LoginContract;
 import com.di.fast.model.LoginModel;
 import com.di.fast.presenter.LoginPresenter;
 import com.di.fast.state.StateView;
 import com.di.fast.state.listener.OnRetryListener;
+import com.zjmy.rxbus.OnEventListener;
+import com.zjmy.rxbus.RxBus;
+import com.zjmy.rxbus.RxMessage;
 
 public class LoginActivity extends ActivityPresenterView<LoginPresenter> implements LoginContract.View {
 
@@ -51,6 +57,13 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
     @Override
     public void outCreate(Bundle savedInstanceState) {
 
+        RxBus.getInstance().register(this, new OnEventListener() {
+            @Override
+            public void onEvent(RxMessage message) {
+                DLog.e("[RxBus] [onEvent] " + message.code);
+            }
+        });
+
         stateView = get(R.id.state_view);
         etLoginName = get(R.id.et_login_name);
         etLoginPassword = get(R.id.et_login_password);
@@ -69,6 +82,19 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        DLog.e("LoginActivity");
+        RxBus.getInstance().lookSubInfo();
+    }
+
+    @Override
+    public void outDestroy() {
+        super.outDestroy();
+        RxBus.getInstance().unRegister(this);
+    }
+
+    @Override
     protected LoginPresenter getPresenter() {
         return new LoginPresenter(new LoginModel(), this, this);
     }
@@ -84,5 +110,6 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
     @Override
     public void loginSuccess() {
 
+        trans(MainActivity.class, null);
     }
 }

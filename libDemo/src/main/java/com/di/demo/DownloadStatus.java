@@ -8,17 +8,17 @@ public class DownloadStatus {
     public static final int SUCCESS = 1;
 
     /**
-     * 失败
+     * 成功 已存在
      * */
-    public static final int FAIL = 2;
+    public static final int SUCCESS_EXIST = 10;
 
     /**
-     * 取消
+     * 出错
      * */
-    public static final int CANCEL = 3;
+    public static final int ERROR = 4;
 
     /**
      * 停止
      * */
-    public static final int PAUSE = 4;
+    public static final int PAUSE = 3;
 }

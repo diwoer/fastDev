@@ -11,10 +11,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/RxBus" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/libBase" />
             <option value="$PROJECT_DIR$/libDemo" />
             <option value="$PROJECT_DIR$/libEventbus" />
+            <option value="$PROJECT_DIR$/libPlatform" />
             <option value="$PROJECT_DIR$/libStateView" />
           </set>
         </option>
