@@ -2,18 +2,7 @@ package com.di.demo;
 
 import android.os.AsyncTask;
 
-import com.di.base.tool.ApplicationTool;
-import com.di.demo.util.FileUtil;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class DownloadTask extends AsyncTask<String, Integer, Integer> {
 
@@ -21,7 +10,7 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
 
     private final AtomicBoolean mPauseByUser = new AtomicBoolean();
 
-    public DownloadTask(DownloadListener listener){
+    public DownloadTask(DownloadListener listener) {
         this.downloadListener = listener;
     }
 
@@ -32,7 +21,7 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
 
     @Override
     protected void onPostExecute(Integer integer) {
-        switch (integer){
+        switch (integer) {
             case DownloadStatus.SUCCESS:
                 downloadListener.onSuccess();
                 break;
@@ -55,66 +44,22 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
         downloadListener.onCancel();
     }
 
-    public void onPause(){
+    public void onPause() {
         mPauseByUser.set(true);
     }
 
-    private int singleDownload(String url){
-
+    private int singleDownload(String url) {
+        FileCopier fileCopier = null;
         try {
-
-            /**
-             * 配置文件保存位置和名字
-             * */
-            String fileName = FileUtil.getFileNameFromUrl(url);
-            String fileParentName = ApplicationTool.getInstance().getApplication().getApplicationContext().getExternalFilesDirs("Documents")[0] + File.separator;
-            File file = new File(fileParentName, fileName);
-            if(file.exists()){
-                return DownloadStatus.SUCCESS_EXIST;
-            }
-
-            /**
-             * 构建下载请求
-             * */
-            OkHttpClient client = new OkHttpClient.Builder()
-                    .build();
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-            Response response = client.newCall(request).execute();
-
-            /**
-             * 暂停请求数据
-             * */
-            if(mPauseByUser.get()){
-                return DownloadStatus.PAUSE;
-            }
-
-            long totalLength = response.body().contentLength();
-            InputStream is = response.body().byteStream();
-            FileOutputStream fos = new FileOutputStream(file);
-
-            /**
-             * 文件流拷贝文件，网络文件拷贝到本地
-             * */
-            byte[] buffer = new byte[1024];
-            int len;
-            long currentProgress = 0;
-            while ((len = is.read(buffer)) != -1){
-                /**
-                 * 暂停拷贝数据
-                 * */
-                if(mPauseByUser.get()){
-                    return DownloadStatus.PAUSE;
+            FileCopier.CopyProgressListener copyProgressListener = new FileCopier.CopyProgressListener() {
+                @Override
+                public void onProgress(long progress, long totalLength) {
+                    publishProgress((int) (progress * 100 / totalLength));
                 }
-                fos.write(buffer, 0, len);
-                currentProgress += len;
-                publishProgress((int) (currentProgress * 100/totalLength));
-            }
-            fos.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            };
+            fileCopier = new DLBuilder(url).createFile().clientCallServer().copyFile(copyProgressListener);
+        } catch (Exception e) {
+            fileCopier.closeIO();
             return DownloadStatus.ERROR;
         }
 
