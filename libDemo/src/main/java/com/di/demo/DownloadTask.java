@@ -23,13 +23,13 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
     protected void onPostExecute(Integer integer) {
         switch (integer) {
             case DownloadStatus.SUCCESS:
-                downloadListener.onSuccess();
+                downloadListener.onSuccess(new DLSuccess());
                 break;
             case DownloadStatus.PAUSE:
                 downloadListener.onPause();
                 break;
             case DownloadStatus.ERROR:
-                downloadListener.onFail();
+                downloadListener.onError(new DLError("错误"));
                 break;
         }
     }
@@ -57,12 +57,16 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
                     publishProgress((int) (progress * 100 / totalLength));
                 }
             };
-            fileCopier = new DLBuilder(url).createFile().clientCallServer().copyFile(copyProgressListener);
+            DLBuilder dlBuilder = new DLBuilder(url).createFile().clientCallServer().copyFile(copyProgressListener);
+            fileCopier = dlBuilder.getFileCopier();
+            dlBuilder.build();
+            return DownloadStatus.SUCCESS;
         } catch (Exception e) {
-            fileCopier.closeIO();
             return DownloadStatus.ERROR;
+        } finally {
+            if (fileCopier != null) {
+                fileCopier.closeIO();
+            }
         }
-
-        return DownloadStatus.SUCCESS;
     }
 }

@@ -38,13 +38,24 @@ public class DLBuilder {
     /**
      * 开始拷贝数据
      */
-    public FileCopier copyFile(FileCopier.CopyProgressListener listener) throws IOException {
+    public DLBuilder copyFile(FileCopier.CopyProgressListener listener)  {
         Preconditions.checkNull(clientCaller, "需要先调用 ----> clientCall()");
         copier = new FileCopier(clientCaller.totalLength());
         if(listener != null){
             copier.setCopyProgressListener(listener);
         }
+        return this;
+    }
+
+    public void build() throws IOException{
         copier.copy(clientCaller.streamResponse(), new FileOutputStream(creator.create()));
+    }
+
+    public final FileCopier getFileCopier(){
         return copier;
+    }
+
+    public final FileCreator getFileCreator(){
+        return creator;
     }
 }

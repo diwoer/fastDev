@@ -21,4 +21,9 @@ public class DownloadStatus {
      * 停止
      * */
     public static final int PAUSE = 3;
+
+    /**
+     * 下载进度
+     * */
+    public static final int PROGRESS = 2;
 }

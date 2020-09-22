@@ -110,6 +110,6 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
     @Override
     public void loginSuccess() {
 
-        trans(MainActivity.class, null);
+        trans(FileDownloadActivity.class, null);
     }
 }

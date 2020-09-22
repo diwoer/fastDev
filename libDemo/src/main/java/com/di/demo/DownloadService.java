@@ -7,6 +7,9 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * 文件下载服务
  * 1、使用AsyncTask处理下载过程
@@ -29,7 +32,7 @@ import androidx.annotation.Nullable;
 
 public class DownloadService extends Service {
 
-    private DownloadTask downloadTask;
+    private ExecutorService downloadExecutor;
 
     private DownloadListener downloadListener;
 
@@ -38,7 +41,7 @@ public class DownloadService extends Service {
     final DownloadListener defaultDownloadListener = new DownloadListener() {
 
         @Override
-        public void onStart() {
+        public void setBeforeStart() {
 
         }
 
@@ -58,16 +61,15 @@ public class DownloadService extends Service {
         }
 
         @Override
-        public void onSuccess() {
+        public void onSuccess(DLSuccess success) {
 
         }
 
         @Override
-        public void onFail() {
+        public void onError(DLError error) {
 
         }
     };
-
 
 
     @Nullable
@@ -83,6 +85,7 @@ public class DownloadService extends Service {
 
         /**
          * 设置下载回调参数
+         * 需要在下载之前设置
          * */
         public void setDownloadCallback(DownloadListener downloadListener){
             DownloadService.this.downloadListener = downloadListener;
@@ -95,18 +98,41 @@ public class DownloadService extends Service {
                 downloadListener = defaultDownloadListener;
             }
 
-            downloadTask = new DownloadTask(downloadListener);
-            downloadTask.execute(url);
+            //文件已经存在了
+            FileCreator fileCreator = new FileCreator(url);
+            if(fileCreator.exist()){
+                DLSuccess success = new DLSuccess();
+                success.path = fileCreator.getFilePath();
+                success.code = DLSuccess.DL_SUCCESS_CODE_EXIST;
+                downloadListener.onSuccess(success);
+                return;
+            }
+
+            if(downloadExecutor == null){
+                //同时下载个数
+                final int threadNumber = 5;
+                //只包含核心线程的线程池，适用于执行长期任务
+                downloadExecutor = Executors.newFixedThreadPool(threadNumber);
+            }
+
+            downloadListener.setBeforeStart();
+
+            //创建线程切换Handler
+            ThreadHandler handler = new ThreadHandler(downloadListener);
+            //创建下载子线程
+            DownloadRunnable downloadRunnable = new DownloadRunnable(url, handler);
+            //加入到线程池中
+            downloadExecutor.execute(downloadRunnable);
         }
 
         @Override
         public void pauseDownload() {
-            downloadTask.onPause();
+
         }
 
         @Override
         public void cancelDownload() {
-            downloadTask.cancel(true);
+
         }
     }
 

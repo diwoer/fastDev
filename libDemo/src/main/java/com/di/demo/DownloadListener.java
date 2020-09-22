@@ -2,7 +2,11 @@ package com.di.demo;
 
 public interface DownloadListener {
 
-    void onStart();
+    /**
+     * 下载之前需要配置的东西
+     * 不要进行耗时操作，会阻塞线程
+     * */
+    void setBeforeStart();
 
     void onProgress(int progress);
 
@@ -10,7 +14,7 @@ public interface DownloadListener {
 
     void onCancel();
 
-    void onSuccess();
+    void onSuccess(DLSuccess success);
 
-    void onFail();
+    void onError(DLError error);
 }

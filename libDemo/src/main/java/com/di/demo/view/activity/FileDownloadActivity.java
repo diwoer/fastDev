@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.di.base.frame.mvp.base.ActivityPresenterView;
 import com.di.base.log.DLog;
+import com.di.demo.DLError;
+import com.di.demo.DLSuccess;
 import com.di.demo.DownloadListener;
 import com.di.demo.DownloadService;
 import com.di.demo.R;
@@ -54,8 +56,9 @@ public class FileDownloadActivity extends ActivityPresenterView<FileDownloadPres
      * 下载回调
      */
     private final DownloadListener downloadListener = new DownloadListener() {
+
         @Override
-        public void onStart() {
+        public void setBeforeStart() {
             tvDownload.setText("开始下载...");
             tvDownload.setEnabled(false);
         }
@@ -79,13 +82,13 @@ public class FileDownloadActivity extends ActivityPresenterView<FileDownloadPres
         }
 
         @Override
-        public void onSuccess() {
+        public void onSuccess(DLSuccess success) {
             tvDownload.setText("下载成功");
             tvDownload.setEnabled(true);
         }
 
         @Override
-        public void onFail() {
+        public void onError(DLError error) {
             tvDownload.setText("下载失败，重新下载");
             tvDownload.setEnabled(true);
         }
