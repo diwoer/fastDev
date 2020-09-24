@@ -26,4 +26,9 @@ public class DownloadStatus {
      * 下载进度
      * */
     public static final int PROGRESS = 2;
+
+    /**
+     * 等待中
+     * */
+    public static final int WAIT = 5;
 }

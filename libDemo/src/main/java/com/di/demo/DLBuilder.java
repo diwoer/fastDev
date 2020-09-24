@@ -1,5 +1,7 @@
 package com.di.demo;
 
+import com.di.demo.data.bean.UrlPositionBean;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -8,21 +10,21 @@ import java.io.IOException;
  */
 public class DLBuilder {
 
-    private String url;
+    private UrlPositionBean urlPosition;
 
     private FileCreator creator;
     private ClientCaller clientCaller;
     private FileCopier copier;
 
-    public DLBuilder(String url) {
-        this.url = url;
+    public DLBuilder(UrlPositionBean urlPosition) {
+        this.urlPosition = urlPosition;
     }
 
     /**
      * 本地创建要下载文件
      */
     public DLBuilder createFile() {
-        creator = new FileCreator(url);
+        creator = new FileCreator(urlPosition.getUrl());
         return this;
     }
 
@@ -31,7 +33,7 @@ public class DLBuilder {
      */
     public DLBuilder clientCallServer() {
         Preconditions.checkNull(creator, "需要先调用 ----> createFile()");
-        clientCaller = new OkHttpClientCaller(url);
+        clientCaller = new OkHttpClientCaller(urlPosition.getUrl());
         return this;
     }
 

@@ -1,8 +1,11 @@
 package com.di.demo;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class DLSuccess implements Serializable {
+import com.di.demo.data.bean.UrlPositionBean;
+
+public class DLSuccess implements Parcelable {
 
     /**
      * 下载文件路径
@@ -16,6 +19,11 @@ public class DLSuccess implements Serializable {
     public int code;
 
     /**
+     * 列表下载，用于确认列表中的位置
+     * */
+    public UrlPositionBean urlPosition;
+
+    /**
      * 下载
      */
     public static final int DL_SUCCESS_CODE_DOWNLOAD = 0;
@@ -27,5 +35,35 @@ public class DLSuccess implements Serializable {
 
     public DLSuccess(){
         this.code = DL_SUCCESS_CODE_DOWNLOAD;
+    }
+
+    protected DLSuccess(Parcel in) {
+        path = in.readString();
+        code = in.readInt();
+        urlPosition = in.readParcelable(UrlPositionBean.class.getClassLoader());
+    }
+
+    public static final Creator<DLSuccess> CREATOR = new Creator<DLSuccess>() {
+        @Override
+        public DLSuccess createFromParcel(Parcel in) {
+            return new DLSuccess(in);
+        }
+
+        @Override
+        public DLSuccess[] newArray(int size) {
+            return new DLSuccess[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(path);
+        dest.writeInt(code);
+        dest.writeParcelable(urlPosition, flags);
     }
 }

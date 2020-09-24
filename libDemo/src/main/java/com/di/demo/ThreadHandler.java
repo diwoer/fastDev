@@ -23,17 +23,17 @@ public class ThreadHandler extends Handler {
         switch (msg.what) {
             case DownloadStatus.ERROR:
                 if(bundle != null){
-                    listener.onError((DLError) bundle.getSerializable(IDLMessageCreator.ERROR));
+                    listener.onError((DLError) bundle.getParcelable(IDLMessageCreator.ERROR));
                 }
                 break;
             case DownloadStatus.PROGRESS:
                 if(bundle != null){
-                    listener.onProgress(bundle.getInt(IDLMessageCreator.PROGRESS));
+                    listener.onProgress((DLProgress) bundle.getParcelable(IDLMessageCreator.PROGRESS));
                 }
                 break;
             case DownloadStatus.SUCCESS:
                 if(bundle != null){
-                    listener.onSuccess((DLSuccess) bundle.getSerializable(IDLMessageCreator.SUCCESS));
+                    listener.onSuccess((DLSuccess) bundle.getParcelable(IDLMessageCreator.SUCCESS));
                 }
                 break;
         }

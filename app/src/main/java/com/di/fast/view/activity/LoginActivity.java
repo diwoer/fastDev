@@ -111,5 +111,6 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
     public void loginSuccess() {
 
         trans(FileDownloadActivity.class, null);
+        btnLogin.setEnabled(true);
     }
 }

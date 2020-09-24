@@ -4,6 +4,7 @@ import com.di.base.tool.ApplicationTool;
 import com.di.demo.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 public class FileCreator {
 
@@ -17,10 +18,13 @@ public class FileCreator {
     /**
      * 在本地创建要下载的文件
      * */
-    public File create(){
+    public File create() throws IOException {
         file = getDownloadLocalFile();
         if(!file.exists()){
-            file.mkdirs();
+            if(!file.getParentFile().exists()){
+                file.getParentFile().mkdirs();
+            }
+            file.createNewFile();
         }
         return file;
     }
@@ -40,14 +44,23 @@ public class FileCreator {
     }
 
     /**
+     * 删除本地文件
+     * */
+    public boolean delete(){
+        File file = getDownloadLocalFile();
+        if(file != null && file.exists()){
+            return file.delete();
+        }
+        return true;
+    }
+
+    /**
      * 获取本地文件
      * */
     private File getDownloadLocalFile(){
         if(file != null){
             return file;
         }
-        String fileName = FileUtil.getFileNameFromUrl(url);
-        String fileParentName = ApplicationTool.getInstance().getApplication().getApplicationContext().getExternalFilesDirs("Documents")[0] + File.separator;
-        return new File(fileParentName, fileName);
+        return new File(ApplicationTool.getInstance().getApplication().getApplicationContext().getExternalFilesDirs("Documents")[0] + File.separator + FileUtil.getFilePathFromUrl(url));
     }
 }

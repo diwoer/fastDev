@@ -7,6 +7,9 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+import com.di.base.log.DLog;
+import com.di.demo.data.bean.UrlPositionBean;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,22 +44,17 @@ public class DownloadService extends Service {
     final DownloadListener defaultDownloadListener = new DownloadListener() {
 
         @Override
-        public void setBeforeStart() {
+        public void onProgress(DLProgress dlProgress) {
 
         }
 
         @Override
-        public void onProgress(int progress) {
+        public void onPause(UrlPositionBean urlPosition) {
 
         }
 
         @Override
-        public void onPause() {
-
-        }
-
-        @Override
-        public void onCancel() {
+        public void onCancel(UrlPositionBean urlPosition) {
 
         }
 
@@ -92,37 +90,39 @@ public class DownloadService extends Service {
         }
 
         @Override
-        public void startDownload(String url) {
+        public void startDownload(UrlPositionBean urlPosition) {
 
             if(downloadListener == null){
                 downloadListener = defaultDownloadListener;
             }
 
             //文件已经存在了
-            FileCreator fileCreator = new FileCreator(url);
+            FileCreator fileCreator = new FileCreator(urlPosition.getUrl());
             if(fileCreator.exist()){
+                DLog.e("文件已经存在了");
                 DLSuccess success = new DLSuccess();
                 success.path = fileCreator.getFilePath();
                 success.code = DLSuccess.DL_SUCCESS_CODE_EXIST;
+                success.urlPosition = urlPosition;
                 downloadListener.onSuccess(success);
                 return;
             }
 
+            //同时下载个数
+            final int threadNumber = 5;
             if(downloadExecutor == null){
-                //同时下载个数
-                final int threadNumber = 5;
                 //只包含核心线程的线程池，适用于执行长期任务
                 downloadExecutor = Executors.newFixedThreadPool(threadNumber);
             }
 
-            downloadListener.setBeforeStart();
-
             //创建线程切换Handler
             ThreadHandler handler = new ThreadHandler(downloadListener);
             //创建下载子线程
-            DownloadRunnable downloadRunnable = new DownloadRunnable(url, handler);
+            DownloadRunnable downloadRunnable = new DownloadRunnable(urlPosition, handler);
             //加入到线程池中
+            DLog.e("开始下载");
             downloadExecutor.execute(downloadRunnable);
+
         }
 
         @Override
@@ -141,7 +141,7 @@ public class DownloadService extends Service {
         /**
          * 开始下载
          * */
-        void startDownload(String url);
+        void startDownload(UrlPositionBean urlPosition);
 
         /**
          * 停止下载

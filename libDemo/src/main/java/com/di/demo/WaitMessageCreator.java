@@ -5,20 +5,20 @@ import android.os.Message;
 
 import com.di.demo.data.bean.UrlPositionBean;
 
-public class ErrorMessageCreator implements IDLMessageCreator {
+public class WaitMessageCreator implements IDLMessageCreator {
 
-    private DLError dlError;
+    private UrlPositionBean urlPosition;
 
-    public ErrorMessageCreator(DLError error){
-        dlError = error;
+    public WaitMessageCreator(UrlPositionBean urlPosition){
+        this.urlPosition = urlPosition;
     }
 
     @Override
     public Message create() {
         Message message = new Message();
-        message.what = DownloadStatus.ERROR;
+        message.what = DownloadStatus.WAIT;
         Bundle bundle = new Bundle();
-        bundle.putParcelable(ERROR, dlError);
+        bundle.putParcelable(WAIT, urlPosition);
         message.setData(bundle);
         return message;
     }

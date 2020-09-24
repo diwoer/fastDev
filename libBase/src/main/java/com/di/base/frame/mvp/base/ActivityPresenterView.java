@@ -1,13 +1,17 @@
 package com.di.base.frame.mvp.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.di.base.R;
+import com.di.base.tool.StatusBarTool;
 import com.di.base.viewcontrol.viewcontroller.IViewControllerClick;
 import com.di.base.viewcontrol.viewcontroller.IViewControllerCommon;
 import com.di.base.viewcontrol.viewcontroller.ViewControllerFactory;
@@ -48,6 +52,9 @@ public abstract class ActivityPresenterView<P extends IPresenter> extends AppCom
         mPresenter.onStart();
 
         mViewControllerFactory = new ViewControllerFactory(mContentView, this);
+
+        StatusBarTool.getInstance().setStatusBarColor(this, ContextCompat.getColor(this, android.R.color.holo_blue_light));
+        StatusBarTool.getInstance().setStatusBarMode(this, false);
 
         outCreate(savedInstanceState);
     }

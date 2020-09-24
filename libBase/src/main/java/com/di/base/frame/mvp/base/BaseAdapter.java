@@ -1,5 +1,6 @@
 package com.di.base.frame.mvp.base;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,12 @@ import java.util.List;
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseHolder<T>> {
 
     private List<T> mDataList;
+    private Context context;
 
     private OnRecyclerItemClickListener<T> mOnRecyclerItemClickListener;
 
-    public BaseAdapter() {
+    public BaseAdapter(Context context) {
+        this.context = context;
         this.mDataList = new ArrayList<>();
     }
 
@@ -57,13 +60,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseHolder<T>>
     @NonNull
     @Override
     public BaseHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, final int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(getRootView(viewType), parent, false);
-        BaseHolder<T> mHolder = getViewHolder(parent, viewType);
+        View itemView = LayoutInflater.from(context).inflate(getRootView(viewType), parent, false);
+        BaseHolder<T> mHolder = getViewHolder(itemView, viewType);
         mHolder.setOnViewClickListener(new BaseHolder.OnViewClickListener() {
             @Override
             public void onClick(View clickView, int position) {
                 if (mOnRecyclerItemClickListener != null) {
-                    mOnRecyclerItemClickListener.onClick(clickView, viewType, getItem(position), position);
+                    mOnRecyclerItemClickListener.onClick(mHolder, clickView, viewType, getItem(position), position);
                 }
             }
         });
@@ -98,6 +101,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseHolder<T>>
 
     public interface OnRecyclerItemClickListener<T> {
 
-        void onClick(View view, int viewType, T data, int position);
+        void onClick(BaseHolder<T> holder, View view, int viewType, T data, int position);
     }
 }

@@ -5,7 +5,7 @@ public class BaseResponse {
     /**
      * 后台接口状态码
      * */
-    public int code;
+    public int code = 200;
 
     /**
      * 接口返回的附带信息

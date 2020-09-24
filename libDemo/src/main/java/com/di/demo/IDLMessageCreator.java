@@ -7,6 +7,7 @@ public interface IDLMessageCreator {
     String PROGRESS = "progress";
     String ERROR = "error";
     String SUCCESS = "success";
+    String WAIT = "wait";
 
     /**
      * 生成消息

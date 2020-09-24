@@ -1,18 +1,14 @@
 package com.di.demo;
 
+import com.di.demo.data.bean.UrlPositionBean;
+
 public interface DownloadListener {
 
-    /**
-     * 下载之前需要配置的东西
-     * 不要进行耗时操作，会阻塞线程
-     * */
-    void setBeforeStart();
+    void onProgress(DLProgress dlProgress);
 
-    void onProgress(int progress);
+    void onPause(UrlPositionBean urlPosition);
 
-    void onPause();
-
-    void onCancel();
+    void onCancel(UrlPositionBean urlPosition);
 
     void onSuccess(DLSuccess success);
 
