@@ -1,3 +1,4 @@
+include ':libFile'
 include ':libPlatform'
 include ':libDemo'
 include ':libStateView'

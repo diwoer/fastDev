@@ -1,7 +1,11 @@
 package com.di.fast.view.activity;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,9 +21,12 @@ import com.di.fast.model.LoginModel;
 import com.di.fast.presenter.LoginPresenter;
 import com.di.fast.state.StateView;
 import com.di.fast.state.listener.OnRetryListener;
+import com.di.file.FileTestActivity;
 import com.zjmy.rxbus.OnEventListener;
 import com.zjmy.rxbus.RxBus;
 import com.zjmy.rxbus.RxMessage;
+
+import java.util.Set;
 
 public class LoginActivity extends ActivityPresenterView<LoginPresenter> implements LoginContract.View {
 
@@ -27,6 +34,7 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
     private IconEditText etLoginName;
     private IconEditText etLoginPassword;
     private Button btnLogin;
+    private Button btnCreateFile;
 
     @Override
     public void showLoading() {
@@ -68,6 +76,7 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
         etLoginName = get(R.id.et_login_name);
         etLoginPassword = get(R.id.et_login_password);
         btnLogin = get(R.id.btn_login);
+        btnCreateFile = get(R.id.btn_create_file);
 
         stateView.setRetryListener(new OnRetryListener() {
             @Override
@@ -77,7 +86,7 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
         });
 
         bindSingleClicks(new int[]{
-            R.id.btn_login
+            R.id.btn_login, R.id.btn_create_file
         });
     }
 
@@ -104,6 +113,8 @@ public class LoginActivity extends ActivityPresenterView<LoginPresenter> impleme
         if (v.getId() == R.id.btn_login) {
             btnLogin.setEnabled(false);
             mPresenter.login(etLoginName, etLoginPassword);
+        } else if (v.getId() == R.id.btn_create_file){
+            startActivity(new Intent(this, FileTestActivity.class));
         }
     }
 

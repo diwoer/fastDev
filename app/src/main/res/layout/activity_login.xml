@@ -73,6 +73,19 @@
             android:text="登录"
             android:background="@drawable/btn_bg"
             style="?android:borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/btn_create_file"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="创建文件"
+            android:background="@drawable/btn_bg"
+            style="?android:borderlessButtonStyle"/>
     </LinearLayout>
 
 </com.di.fast.state.StateView>

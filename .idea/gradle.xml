@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/libBase" />
             <option value="$PROJECT_DIR$/libDemo" />
             <option value="$PROJECT_DIR$/libEventbus" />
+            <option value="$PROJECT_DIR$/libFile" />
             <option value="$PROJECT_DIR$/libPlatform" />
             <option value="$PROJECT_DIR$/libStateView" />
           </set>
